@@ -31,7 +31,7 @@ button:hover {
     padding: 15px;
     border: 1px solid #ddd;
     min-height: 50px;
-    color: blue; /* Color azul para el texto */
+    color: blue;
 }
 
 #contador {

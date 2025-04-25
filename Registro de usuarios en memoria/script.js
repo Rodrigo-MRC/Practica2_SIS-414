@@ -5,17 +5,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const totalUsuarios = document.getElementById('total-usuarios');
     const buscador = document.getElementById('buscador');
     
-    // Base de datos en memoria
     let usuarios = [];
     let usuariosMostrados = [];
     
-    // Función para mostrar usuarios
     function mostrarUsuarios(usuariosAMostrar = usuarios) {
         listaUsuarios.innerHTML = '';
         usuariosMostrados = usuariosAMostrar;
         
         usuariosAMostrar.forEach((usuario, index) => {
-            // Encontramos el índice real en el array original
             const realIndex = usuarios.findIndex(u => 
                 u.nombre === usuario.nombre && 
                 u.email === usuario.email && 
@@ -30,10 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
             listaUsuarios.appendChild(li);
         });
         
-        // Actualizar contador
         totalUsuarios.textContent = `Total: ${usuariosAMostrar.length}`;
         
-        // Agregar eventos a los botones eliminar
         document.querySelectorAll('.eliminar-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const id = parseInt(this.getAttribute('data-id'));
@@ -43,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Función para filtrar usuarios
     function filtrarUsuarios(terminoBusqueda) {
         const busqueda = terminoBusqueda.toLowerCase();
         const usuariosFiltrados = usuarios.filter(user =>
@@ -52,21 +46,17 @@ document.addEventListener('DOMContentLoaded', function() {
         mostrarUsuarios(usuariosFiltrados);
     }
     
-    // Evento de búsqueda en tiempo real
     buscador.addEventListener('input', (e) => {
         filtrarUsuarios(e.target.value);
     });
     
-    // Manejar envío del formulario
     formulario.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Obtener valores
         const nombre = document.getElementById('nombre').value.trim();
         const email = document.getElementById('email').value.trim();
         const edad = document.getElementById('edad').value.trim();
         
-        // Validación
         if (!nombre || !email || !edad) {
             errorDiv.textContent = 'Todos los campos son obligatorios';
             return;
@@ -77,23 +67,18 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Limpiar mensajes de error
         errorDiv.textContent = '';
         
-        // Agregar usuario
         usuarios.push({
             nombre,
             email,
             edad: parseInt(edad)
         });
         
-        // Mostrar usuarios (filtrados si hay búsqueda activa)
         filtrarUsuarios(buscador.value);
         
-        // Limpiar formulario
         formulario.reset();
     });
     
-    // Mostrar todos los usuarios al cargar
     mostrarUsuarios();
 });
